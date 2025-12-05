@@ -1,11 +1,9 @@
 services:
   backend:
-    build: ./pdf-tool-backend   # <— FIXED: backend is now a mapping
+    build: ./pdf-tool-backend
     container_name: pdf-tool-backend
     ports:
-      - "8001:8000"
+      - "8000:8000"
     volumes:
       - ./pdf-tool-backend:/app
-    # environment:
-    #   - ALLOWED_ORIGINS=http://localhost:5173
 
