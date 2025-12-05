@@ -2,7 +2,7 @@
 from pypdf import PdfReader, PdfWriter
 import io
 
-def say_hi(file_bytes: bytes):
+def split(file_bytes: bytes):
     input_stream = io.BytesIO(file_bytes)
     
     reader = PdfReader(input_stream)

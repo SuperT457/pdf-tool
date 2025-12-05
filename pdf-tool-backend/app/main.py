@@ -1,10 +1,21 @@
 # main.py
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import StreamingResponse
-# Importiamo la logica come modulo! 
-from .services.pdf_service import say_hi
+from fastapi.middleware.cors import CORSMiddleware
+from .services.pdf_service import split
+
+origins = [
+    "http://localhost:5173"
+]
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*']
+)
 
 @app.post("/api/split")
 async def split(file: UploadFile = File(...)):
@@ -13,7 +24,7 @@ async def split(file: UploadFile = File(...)):
 
     try:
         content = await file.read()
-        result_buffer = say_hi(content)
+        result_buffer = split(content)
         return StreamingResponse(
             result_buffer,
             media_type="application/pdf",
